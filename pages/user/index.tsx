@@ -5,9 +5,6 @@ import { useSwrFetcherWithAccessToken } from '@/functions/useSwrFetcherWithAcces
 import useSwr from 'swr';
 // import { GetUserCursorPaginationModel, GetUserModel, UserOffsetModel } from '@/functions/swagger/BelajarNextJsBackEnd';
 import { GetUserCursorPaginationModel, GetUserModel } from '@/functions/swagger/BelajarNextJsBackEnd';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faRemove } from '@fortawesome/free-solid-svg-icons';
-import Link from 'next/link';
 import { useState } from 'react'
 
 const UserDisplayItem: React.FC<{
@@ -19,14 +16,7 @@ const UserDisplayItem: React.FC<{
             <td className="border px-4 py-2">{user.username}</td>
             <td className="border px-4 py-2">{user.email}</td>
             <td className="border px-4 py-2">
-                <Link href={`/user/edit/${user.id}`} className="inline-block py-1 px-2 text-xs bg-blue-500 text-white rounded-lg">
-                    <FontAwesomeIcon className='mr-1' icon={faEdit}></FontAwesomeIcon>
-                    Edit
-                </Link>
-                <button className="ml-1 py-1 px-2 text-xs bg-red-500 text-white rounded-lg">
-                    <FontAwesomeIcon className='mr-1' icon={faRemove}></FontAwesomeIcon>
-                    Delete
-                </button>
+                <img src={user.fileUrl} alt="profile Picture" />
             </td>
         </tr>
     );
@@ -34,7 +24,7 @@ const UserDisplayItem: React.FC<{
 
 const IndexPage: Page = () => {
     // const [pageIndex, setPageIndex] = useState(0);
-    const [url, setUrl] = useState("api/User/cursor-pagination?limit=1");
+    const [url, setUrl] = useState("api/User/cursor-pagination?limit=2");
 
     const fetcher = useSwrFetcherWithAccessToken();
 
@@ -54,7 +44,7 @@ const IndexPage: Page = () => {
                         <th className='px-4 py-2'>ID</th>
                         <th className='px-4 py-2'>Name</th>
                         <th className='px-4 py-2'>Email</th>
-                        <th className='px-4 py-2'></th>
+                        <th className='px-4 py-2'>Profile Picture</th>
                     </tr>
                 </thead>
                 <tbody>

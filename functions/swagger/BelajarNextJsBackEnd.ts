@@ -96,11 +96,184 @@ export class BelajarNextJsBackEndClient {
     }
 
     /**
+     * @param fileName (optional) 
+     * @return Success
+     */
+    blobGET(fileName: string | undefined): Promise<string> {
+        let url_ = this.baseUrl + "/api/blob?";
+        if (fileName === null)
+            throw new Error("The parameter 'fileName' cannot be null.");
+        else if (fileName !== undefined)
+            url_ += "fileName=" + encodeURIComponent("" + fileName) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "text/plain"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processBlobGET(_response);
+        });
+    }
+
+    protected processBlobGET(response: Response): Promise<string> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as string;
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<string>(null as any);
+    }
+
+    /**
+     * @param fileName (optional) 
+     * @param fileExtension (optional) 
+     * @return Success
+     */
+    blobDELETE(fileName: string | undefined, fileExtension: string | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/blob?";
+        if (fileName === null)
+            throw new Error("The parameter 'fileName' cannot be null.");
+        else if (fileName !== undefined)
+            url_ += "fileName=" + encodeURIComponent("" + fileName) + "&";
+        if (fileExtension === null)
+            throw new Error("The parameter 'fileExtension' cannot be null.");
+        else if (fileExtension !== undefined)
+            url_ += "fileExtension=" + encodeURIComponent("" + fileExtension) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "DELETE",
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processBlobDELETE(_response);
+        });
+    }
+
+    protected processBlobDELETE(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * @param fileName (optional) 
+     * @return Success
+     */
+    presignedPutObject(fileName: string | undefined): Promise<string> {
+        let url_ = this.baseUrl + "/api/blob/presigned-put-object?";
+        if (fileName === null)
+            throw new Error("The parameter 'fileName' cannot be null.");
+        else if (fileName !== undefined)
+            url_ += "fileName=" + encodeURIComponent("" + fileName) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "text/plain"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processPresignedPutObject(_response);
+        });
+    }
+
+    protected processPresignedPutObject(response: Response): Promise<string> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as string;
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<string>(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @param fileName (optional) 
+     * @param mime (optional) 
+     * @return Success
+     */
+    blobInformation(id: string | undefined, fileName: string | undefined, mime: string | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/blob/blob-information?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        if (fileName === null)
+            throw new Error("The parameter 'fileName' cannot be null.");
+        else if (fileName !== undefined)
+            url_ += "fileName=" + encodeURIComponent("" + fileName) + "&";
+        if (mime === null)
+            throw new Error("The parameter 'mime' cannot be null.");
+        else if (mime !== undefined)
+            url_ += "mime=" + encodeURIComponent("" + mime) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processBlobInformation(_response);
+        });
+    }
+
+    protected processBlobInformation(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
      * @param body (optional) 
      * @return Success
      */
     newUser(body: RegisterUserModel | undefined): Promise<number> {
-        let url_ = this.baseUrl + "/newUser";
+        let url_ = this.baseUrl + "/new-user";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -139,8 +312,8 @@ export class BelajarNextJsBackEndClient {
     /**
      * @return Success
      */
-    getUserList(): Promise<GetUserModel[]> {
-        let url_ = this.baseUrl + "/get-user-list";
+    userList(): Promise<GetUserModel[]> {
+        let url_ = this.baseUrl + "/user-list";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
@@ -151,11 +324,11 @@ export class BelajarNextJsBackEndClient {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetUserList(_response);
+            return this.processUserList(_response);
         });
     }
 
-    protected processGetUserList(response: Response): Promise<GetUserModel[]> {
+    protected processUserList(response: Response): Promise<GetUserModel[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -175,8 +348,8 @@ export class BelajarNextJsBackEndClient {
     /**
      * @return Success
      */
-    getUser(name: string): Promise<void> {
-        let url_ = this.baseUrl + "/get-user/{name}";
+    user(name: string): Promise<void> {
+        let url_ = this.baseUrl + "/user/{name}";
         if (name === undefined || name === null)
             throw new Error("The parameter 'name' must be defined.");
         url_ = url_.replace("{name}", encodeURIComponent("" + name));
@@ -189,11 +362,11 @@ export class BelajarNextJsBackEndClient {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetUser(_response);
+            return this.processUser(_response);
         });
     }
 
-    protected processGetUser(response: Response): Promise<void> {
+    protected processUser(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -213,7 +386,7 @@ export class BelajarNextJsBackEndClient {
      * @return Success
      */
     updateUser(body: UpdateUserModel | undefined): Promise<boolean> {
-        let url_ = this.baseUrl + "/updateUser";
+        let url_ = this.baseUrl + "/update-user";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -254,7 +427,7 @@ export class BelajarNextJsBackEndClient {
      * @return Success
      */
     deleteUser(id: number | undefined): Promise<boolean> {
-        let url_ = this.baseUrl + "/deleteUser?";
+        let url_ = this.baseUrl + "/delete-user?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
         else if (id !== undefined)
@@ -439,6 +612,9 @@ export interface GetUserModel {
     id?: number;
     username?: string | undefined;
     email?: string | undefined;
+    blobId?: string | undefined;
+    fileName?: string | undefined;
+    fileUrl?: string | undefined;
 }
 
 export interface RegisterAddressModel {
@@ -450,6 +626,7 @@ export interface RegisterUserModel {
     userName?: string | undefined;
     password?: string | undefined;
     email?: string | undefined;
+    blobId?: string;
 }
 
 export interface UpdateUserModel {
